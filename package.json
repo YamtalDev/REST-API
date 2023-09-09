@@ -1,0 +1,9 @@
+{
+  "name": "REST-API",
+  "version": "1.0.0",
+  "description": "REST API using node.js express and Mongodb",
+  "main": "index.js",
+  "repository": "https://github.com/YamtalDev/REST-API.git",
+  "author": "Tal Aharon",
+  "license": "MIT"
+}
