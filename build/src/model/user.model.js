@@ -27,7 +27,7 @@ userSchema.pre("save", function (next) {
             return next();
         }
         const salt = yield bcrypt_1.default.genSalt(config_1.default.get("saltWakFactor"));
-        const hash = yield bcrypt_1.default.hashSync(this.password, salt);
+        const hash = bcrypt_1.default.hashSync(this.password, salt);
         this.password = hash;
         return next();
     });
@@ -38,5 +38,5 @@ userSchema.methods.comparePassword = function (candidatePassword) {
         return bcrypt_1.default.compare(candidatePassword, user.password).catch(((e) => false));
     });
 };
-const userModel = mongoose_1.default.model("User", userSchema);
-exports.default = (userModel);
+const UserModel = mongoose_1.default.model("User", userSchema);
+exports.default = (UserModel);

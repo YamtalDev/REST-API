@@ -25,7 +25,7 @@ export interface UserDocument extends UserInput, mongoose.Document
 
 const userSchema = new mongoose.Schema(userData, {timestamps: true});
 
-userSchema.pre<UserDocument>("save", async function (next)
+userSchema.pre("save", async function (next)
 {
     if(!this.isModified("password"))
     {
@@ -33,7 +33,7 @@ userSchema.pre<UserDocument>("save", async function (next)
     }
 
     const salt = await bcrypt.genSalt(config.get<number>("saltWakFactor"));
-    const hash = await bcrypt.hashSync(this.password, salt);
+    const hash = bcrypt.hashSync(this.password, salt);
     this.password = hash;
     return next();
 });
@@ -45,5 +45,5 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
     return bcrypt.compare(candidatePassword, user.password).catch(((e) => false));
 }
 
-const userModel = mongoose.model<UserDocument>("User", userSchema);
-export default (userModel);
+const UserModel = mongoose.model<UserDocument>("User", userSchema);
+export default (UserModel);

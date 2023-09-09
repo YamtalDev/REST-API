@@ -8,7 +8,7 @@ const sessionData =
     userAgent: {type: String}
 };
 
-export interface sessionDocument extends mongoose.Document
+export interface SessionDocument extends mongoose.Document
 {
     user: UserDocument["_id"];
     valid: boolean;
@@ -19,5 +19,5 @@ export interface sessionDocument extends mongoose.Document
 
 const SessionSchema = new mongoose.Schema(sessionData, {timestamps: true});
 
-const SessionModel = mongoose.model<sessionDocument>("Session", SessionSchema);
+const SessionModel = mongoose.model<SessionDocument>("Session", SessionSchema);
 export default (SessionModel);

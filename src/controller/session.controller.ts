@@ -13,8 +13,17 @@ export async function createUserSessionHandler(req: Request, res: Response)
     }
 
     const session = await createSession(user._id, req.get("user-agent") || "");
-    const accessToken = signJwt({...user, session: session._id}, {expiresIn: config.get('accessTokenTtl')});
-    const refreshToken = signJwt({...user, session: session._id}, {expiresIn: config.get('refreshTokenTtl')});
+
+    const accessToken = signJwt(
+    {...user, session: session._id},
+    "accessTokenPrivateKey",
+    {expiresIn: config.get('accessTokenTtl')});
+
+    const refreshToken = signJwt(
+    {...user, session: session._id},
+    "refreshTokenPrivateKey",
+    {expiresIn: config.get('refreshTokenTtl')});
+
     return (res.send({accessToken, refreshToken}));
 }
 

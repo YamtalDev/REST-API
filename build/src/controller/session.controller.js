@@ -24,8 +24,8 @@ function createUserSessionHandler(req, res) {
             return (res.status(401).send("Invalid email or password"));
         }
         const session = yield (0, session_service_1.createSession)(user._id, req.get("user-agent") || "");
-        const accessToken = (0, jwt_utils_1.signJwt)(Object.assign(Object.assign({}, user), { session: session._id }), { expiresIn: config_1.default.get('accessTokenTtl') });
-        const refreshToken = (0, jwt_utils_1.signJwt)(Object.assign(Object.assign({}, user), { session: session._id }), { expiresIn: config_1.default.get('refreshTokenTtl') });
+        const accessToken = (0, jwt_utils_1.signJwt)(Object.assign(Object.assign({}, user), { session: session._id }), "accessTokenPrivateKey", { expiresIn: config_1.default.get('accessTokenTtl') });
+        const refreshToken = (0, jwt_utils_1.signJwt)(Object.assign(Object.assign({}, user), { session: session._id }), "refreshTokenPrivateKey", { expiresIn: config_1.default.get('refreshTokenTtl') });
         return (res.send({ accessToken, refreshToken }));
     });
 }

@@ -12,3 +12,4 @@ const logOptions =
 const log = logger(logOptions);
 
 export default log;
+

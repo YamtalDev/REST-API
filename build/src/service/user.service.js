@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.findUser = exports.validatePassword = exports.createUser = void 0;
 const lodash_1 = require("lodash");
 const user_model_1 = __importDefault(require("../model/user.model"));
-const user_model_2 = __importDefault(require("../model/user.model"));
 function createUser(input) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -28,7 +27,7 @@ function createUser(input) {
     });
 }
 exports.createUser = createUser;
-function validatePassword({ email, password }) {
+function validatePassword({ email, password, }) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield user_model_1.default.findOne({ email });
         if (!user) {
@@ -44,7 +43,7 @@ function validatePassword({ email, password }) {
 exports.validatePassword = validatePassword;
 function findUser(query) {
     return __awaiter(this, void 0, void 0, function* () {
-        return (user_model_2.default.findOne(query).lean());
+        return (user_model_1.default.findOne(query).lean());
     });
 }
 exports.findUser = findUser;

@@ -18,7 +18,7 @@ const deserializeUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     if (!accessToken) {
         return (next());
     }
-    const { decoded, expired } = (0, jwt_utils_1.verifyJwt)(accessToken);
+    const { decoded, expired } = (0, jwt_utils_1.verifyJwt)(accessToken, "accessTokenPublicKey");
     if (decoded) {
         res.locals.user = decoded;
         return (next());
@@ -28,7 +28,7 @@ const deserializeUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         if (newAccessToken) {
             res.setHeader('x-access-token', newAccessToken);
         }
-        const result = (0, jwt_utils_1.verifyJwt)(newAccessToken);
+        const result = (0, jwt_utils_1.verifyJwt)(newAccessToken, "accessTokenPublicKey");
         res.locals.user = result.decoded;
         return (next());
     }

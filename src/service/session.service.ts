@@ -3,7 +3,7 @@ import config from 'config';
 import {findUser} from './user.service';
 import {FilterQuery, UpdateQuery} from 'mongoose';
 import { signJwt, verifyJwt } from '../utils/jwt.utils';
-import SessionModel, {sessionDocument} from '../model/session.model';
+import SessionModel, {SessionDocument} from '../model/session.model';
 
 export async function createSession(userId: string, userAgent: string)
 {
@@ -11,20 +11,20 @@ export async function createSession(userId: string, userAgent: string)
     return (session.toJSON());
 }
 
-export async function findSessions(query: FilterQuery<sessionDocument>)
+export async function findSessions(query: FilterQuery<SessionDocument>)
 {
     return (SessionModel.find(query).lean());
 }
 
 export async function updateSession
-(query: FilterQuery<sessionDocument>,update: UpdateQuery<sessionDocument>)
+(query: FilterQuery<SessionDocument>,update: UpdateQuery<SessionDocument>)
 {
     return (SessionModel.updateOne(query, update));
 }
 
 export async function reIssueAccessToken({refreshToken}:{refreshToken: string})
 {
-    const {decoded} = verifyJwt(refreshToken);
+    const {decoded} = verifyJwt(refreshToken, "refreshTokenPublicKey");
     if(!decoded || !get(decoded, "session"))
     {
         return (false);
@@ -42,8 +42,10 @@ export async function reIssueAccessToken({refreshToken}:{refreshToken: string})
         return (false);
     }
 
-    const accessToken = signJwt
-    ({...user, session: session._id}, {expiresIn: config.get('accessTokenTtl')});
+    const accessToken = signJwt(
+    {...user, session: session._id}, 
+    "accessTokenPrivateKey",
+    {expiresIn: config.get('accessTokenTtl')});
 
     return (accessToken);
 }

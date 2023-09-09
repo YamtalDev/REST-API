@@ -39,7 +39,7 @@ function updateSession(query, update) {
 exports.updateSession = updateSession;
 function reIssueAccessToken({ refreshToken }) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { decoded } = (0, jwt_utils_1.verifyJwt)(refreshToken);
+        const { decoded } = (0, jwt_utils_1.verifyJwt)(refreshToken, "refreshTokenPublicKey");
         if (!decoded || !(0, lodash_1.get)(decoded, "session")) {
             return (false);
         }
@@ -51,7 +51,7 @@ function reIssueAccessToken({ refreshToken }) {
         if (!user) {
             return (false);
         }
-        const accessToken = (0, jwt_utils_1.signJwt)(Object.assign(Object.assign({}, user), { session: session._id }), { expiresIn: config_1.default.get('accessTokenTtl') });
+        const accessToken = (0, jwt_utils_1.signJwt)(Object.assign(Object.assign({}, user), { session: session._id }), "accessTokenPrivateKey", { expiresIn: config_1.default.get('accessTokenTtl') });
         return (accessToken);
     });
 }

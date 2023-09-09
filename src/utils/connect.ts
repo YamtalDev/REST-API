@@ -1,4 +1,4 @@
-import log from './logger';
+import logger from './logger';
 import config from 'config';
 import mongoose from 'mongoose';
 
@@ -8,11 +8,11 @@ async function connect()
     try
     {
         await (mongoose.connect(dbUri));
-        log.info('Database connected');
+        logger.info('Database connected');
     }
     catch(error)
     {
-        log.error('Could not connect to Database', error);
+        logger.error('Could not connect to Database', error);
         process.exit(1);
     }
 }
