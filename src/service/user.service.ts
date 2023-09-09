@@ -8,7 +8,7 @@ export async function createUser(input: UserInput)
     try
     {
         const user = await UserModel.create(input);
-        return (omit(user.toJSON(), "password"));
+        return (user);
     }
     catch(error: any)
     {
@@ -30,8 +30,7 @@ export async function validatePassword({email, password}:{email: string, passwor
         return (false);
     }
 
-    return (omit(user.toJSON(), "password"));
-
+    return (user);
 }
 
 export async function findUser(query: FilterQuery<UserDocument>)

@@ -7,7 +7,8 @@
   "author": "YamtalDev <tal.aharon.work@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
