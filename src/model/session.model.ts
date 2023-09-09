@@ -1,8 +1,5 @@
-import bcrypt from 'bcrypt';
-import config from 'config';
 import mongoose from 'mongoose';
 import {UserDocument} from './user.model'
-import { boolean } from 'zod';
 
 const sessionData =
 {
@@ -11,7 +8,7 @@ const sessionData =
     userAgent: {type: String}
 };
 
-export interface SchemaDocument extends mongoose.Document
+export interface sessionDocument extends mongoose.Document
 {
     user: UserDocument["_id"];
     valid: boolean;
@@ -22,5 +19,5 @@ export interface SchemaDocument extends mongoose.Document
 
 const SessionSchema = new mongoose.Schema(sessionData, {timestamps: true});
 
-const SessionModel = mongoose.model("Session", SessionSchema);
+const SessionModel = mongoose.model<sessionDocument>("Session", SessionSchema);
 export default (SessionModel);
