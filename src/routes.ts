@@ -1,8 +1,11 @@
-import {Express, Request, Response} from "express";
+import {Express, Request, Response, Router} from "express";
+import createUserHandler from "./controller/user.controller";
 
-export default function(app: Express)
+function routes(app: Express)
 {
-    app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
+    app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
 
-
+    app.post('/api/users', createUserHandler);
 }
+
+export default (routes);

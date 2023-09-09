@@ -1,17 +1,14 @@
 import logger from 'pino';
 import dayjs from 'dayjs';
-import pinoPretty from 'pino-pretty';
 
-const log = logger({
-  prettyPrint: false,
-  base: {
-    pid: false,
-  },
-  timestamp: () => `,"time":"${dayjs().format()}"`,
-  formatters: {
-    level: (label) => ({ level: label }),
-  },
-  prettifier: pinoPretty,
-});
+const logOptions =
+{
+    prettyPrint: false,
+    base: { pid: false },
+    timestamp: () => `,"time":"${dayjs().format()}"`,
+    messageKey: 'message',
+};
+
+const log = logger(logOptions);
 
 export default log;

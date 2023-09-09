@@ -1,19 +1,20 @@
-import mongoose, { ConnectOptions } from 'mongoose';
+import log from './logger';
 import config from 'config';
-import log from '../logger';
+import mongoose from 'mongoose';
 
-function connect() {
-  const dbUri = config.get('dbUri') as string;
-
-  return mongoose
-    .connect(dbUri)
-    .then(() => {
-      log.info('Database connected');
-    })
-    .catch((error) => {
-      log.error('db error', error);
-      process.exit(1);
-    });
+async function connect()
+{
+    const dbUri = config.get<string>('dbUri');
+    try
+    {
+        await (mongoose.connect(dbUri));
+        log.info('Database connected');
+    }
+    catch(error)
+    {
+        log.error('Could not connect to Database', error);
+        process.exit(1);
+    }
 }
 
-export default connect;
+export default (connect);
