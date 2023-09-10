@@ -1,5 +1,4 @@
 import crypto from "crypto";
-import "dotenv/config";
 
 const SECRET = "TAL-IS-GOING-TO-GET-THE-JOB"
 

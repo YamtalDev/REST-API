@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {random, authentication} from "../helpers"; 
-import {createUser, getUserByEmail} from "db/user.schema";
+import {createUser, getUserByEmail} from "../db/user.schema";
 
 export const register = async(req: Request, res: Response) =>
 {
@@ -22,7 +22,7 @@ export const register = async(req: Request, res: Response) =>
         const user = await createUser({email,username, authentication:
         {salt, password: authentication(salt, password)}});
 
-        return (res.sendStatus(200).json(user).end());
+        return (res.json(user).end());
     }
     catch(error)
     {

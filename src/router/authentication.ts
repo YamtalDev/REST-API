@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { register } from "../controllers/authentication";
+import {register} from "../controllers/authentication";
 
 export default (router: Router) =>
 {
