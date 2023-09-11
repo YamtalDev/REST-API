@@ -10,20 +10,20 @@ import {connectDataBase} from "./db/connection.db";
 
 const app = express();
 
-app.use("/", router);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(cors({credentials: true}));
 
-process.on("SIGINT", signalHandler);
-process.on("SIGTERM", signalHandler);
-
 const port = process.env.PORT || 80;
 const server = http.createServer(app);
-const dbUri = process.env.DB as string
+const dbUri = process.env.DB as string;
 
+app.use("/", router);
 connectDataBase(dbUri);
 server.listen(port, () =>
 {
     console.log(`Server listing at http://localhost:${port}`);
 });
+
+process.on("SIGINT", signalHandler);
+process.on("SIGTERM", signalHandler);

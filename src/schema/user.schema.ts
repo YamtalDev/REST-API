@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file user.schema.ts
- * @description Defines the MongoDB schema for the user use case.
+ * @description Defines the MongoDB schema for and query actions to the data base.
 ******************************************************************************/
 import mongoose from "mongoose";
 
@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema
     salary: {type: Number, require: true},
     authentication: 
     {
-        idNumber: {type: String, required: true, select: false}, 
+        id: {type: String, required: true, select: false}, 
         salt: {type: String, select: false},
     },
 });

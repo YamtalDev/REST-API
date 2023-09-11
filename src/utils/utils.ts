@@ -5,8 +5,8 @@ import {disconnectDataBase} from "../db/connection.db";
 ******************************************************************************/
 function cleanUp()
 {
-        console.log("Closing server.");
-        process.exit(0);
+    console.log("Closing server.");
+    process.exit(0);
 }
 /******************************************************************************
  * @description Handles signals to gracefully shut down the server and disconnect from the database.

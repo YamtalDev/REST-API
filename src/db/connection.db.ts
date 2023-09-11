@@ -20,7 +20,7 @@ export function connectDataBase(dbUri: string)
     }
 
     db.on("error", (error: Error) => console.error("MongoDB connection error:", error));
-    db.once("open", () => console.log("Connected to MongoDB cloud"));
+    db.once("open", () => console.log("Connected to MongoDB"));
 }
 /******************************************************************************
  * @description: Gracefully disconnects from the MongoDB database.

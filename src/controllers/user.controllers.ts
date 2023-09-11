@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {random, authentication} from "../utils/encrypt";
-import {createUser,deleteUserById, updateUserById, getUserByEmail,getUserById,getUsers} from "../db/query.db";
+import {createUser,deleteUserById, updateUserById, getUserByEmail,getUserById,getUsers} from "../db/db.query";
 
 /******************************************************************************
  * @description: Registers a new user.
@@ -10,24 +10,24 @@ export const registerUser = async (req: Request, res: Response) =>
 {
     try
     {
-        const {name, email, country, city, salary, idNumber} = req.body;
-        if(!email || !name || !country || !city || !salary || !idNumber)
+        const {name, email, country, city, salary, id} = req.body;
+        if(!email || !name || !country || !city || !salary || !id)
         {
             return (res.sendStatus(406).json({error: "All fields required"}));
         }
-        
+
         const existingUser = await getUserByEmail(email);
         if(existingUser)
         {
             return (res.status(409).json({error: "User already exists"}));
         }
-
+        
         const salt = random();
         const user = await createUser({
             name, email, country, city, salary, 
-            authentication: {salt, idNumber: authentication(salt, idNumber)}
+            authentication: {salt, id: authentication(salt, id)}
         });
-
+        
         return (res.status(201).json(user).end());
     }
     catch(error)
@@ -61,13 +61,13 @@ export const getUser = async (req: Request, res: Response) =>
 {
     try
     {
-        const {id} = req.body;
-        if(!id)
+        const {id} = req.params;
+        const user = await getUserById(id);
+        if(!user)
         {
-            return (res.sendStatus(400).json({error: "Must fill the id"}));
+            return (res.status(404).json({ error: "User not found" }));
         }
 
-        const user = await getUserById(id);
         return (res.status(200).json(user));
     }
     catch(error)
@@ -84,7 +84,7 @@ export const deleteUser = async (req: Request, res: Response) =>
 {
     try
     {
-        const {id} = req.body;
+        const {id} = req.params;
         const deletedUser = await deleteUserById(id);
         return (res.status(201).json(deletedUser));
     }

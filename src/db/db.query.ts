@@ -1,4 +1,4 @@
-import {UserModel} from "../schema/user.schema"
+import {UserModel} from "../schema/user.schema";
 
 /******************************************************************************
  * @description: Retrieve all users from the MongoDB collection.

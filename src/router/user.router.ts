@@ -10,14 +10,7 @@
  * @DELETE      /api/users/:id : Delete a Specific User by ID
  ******************************************************************************/
 import {Router} from "express";
-import
-{
-    registerUser,
-    getAllUsers,
-    getUser,
-    updateUser,
-    deleteUser,
-} from "../controllers/user.controllers";
+import{registerUser, getAllUsers, getUser, updateUser, deleteUser} from "../controllers/user.controllers";
 
 const router = Router();
 router.post("/api/users", registerUser);
