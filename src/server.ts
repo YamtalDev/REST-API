@@ -1,33 +1,29 @@
 import "dotenv/config";
 import http from "http";
 import cors from "cors";
-import routes from "./router";
 import express from "express";
-import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import compression from "compression";
-import cookieParser from "cookie-parser";
+import router from "./router/user.router";
+import {signalHandler} from "./utils/utils";
+import {connectDataBase} from "./db/connection.db";
 
 const app = express();
+
+app.use("/", router);
 app.use(compression());
-app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors({credentials: true}));
 
-const port = process.env.PORT || 8080;
+process.on("SIGINT", signalHandler);
+process.on("SIGTERM", signalHandler);
 
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB as string);
-
-const db = mongoose.connection;
-
-db.on("error", (error: Error) => console.error("MongoDB connection error:", error));
-db.once("open", () => console.log("Connected to MongoDB"));
-
-app.use("/", routes);
+const port = process.env.PORT || 80;
 const server = http.createServer(app);
+const dbUri = process.env.DB as string
 
+connectDataBase(dbUri);
 server.listen(port, () =>
 {
-  console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server listing at http://localhost:${port}`);
 });
